@@ -16,10 +16,10 @@ library = [
     {"title": "Cara mengubah Ryzen menjadi Intel", "author": "Abdul Ilham", "year": 2020}
 ]
 
-def search_books(keyword):
+def search_books(keyword, field):
     results = []
     for book in library:
-        if keyword.lower() in book["title"].lower():
+        if keyword.lower() in str(book[field]).lower():
             results.append(book)
     return results
 
@@ -34,9 +34,27 @@ def display_books(books):
 def main():
     while True:
         print("Selamat datang di pencarian buku")
-        keyword = input("Masukkan kata kunci judul buku yang ingin dicari: ")
-        results = search_books(keyword)
+        print("1. Cari berdasarkan judul")
+        print("2. Cari berdasarkan penulis")
+        print("3. Cari berdasarkan tahun")
+        choice = input("Masukkan pilihan anda (1/2/3): ")
+        
+        if choice == '1':
+            keyword = input("Masukkan kata kunci judul buku yang ingin dicari: ")
+            field = "title"
+        elif choice == '2':
+            keyword = input("Masukkan nama penulis yang ingin dicari: ")
+            field = "author"
+        elif choice == '3':
+            keyword = input("Masukkan tahun buku yang ingin dicari: ")
+            field = "year"
+        else:
+            print("Pilihan tidak valid, silakan coba lagi.")
+            continue
+
+        results = search_books(keyword, field)
         display_books(results)
+        
         lagi = input("Apakah anda ingin mencari data buku yang lain? (Y/N): ")
         if lagi.lower() != 'y':
             break
